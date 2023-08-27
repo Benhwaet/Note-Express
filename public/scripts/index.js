@@ -2,6 +2,7 @@ let noteTitle;
 let noteText;
 let saveNoteBtn;
 let newNoteBtn;
+let deleteNoteBtn;
 let noteList;
 
 if (window.location.pathname === '/notes') {
@@ -9,6 +10,7 @@ if (window.location.pathname === '/notes') {
   noteText = document.querySelector('.note-textarea');
   saveNoteBtn = document.querySelector('.save-note');
   newNoteBtn = document.querySelector('.new-note');
+  deleteNoteBtn = document.querySelector('.delete-note');
   noteList = document.querySelectorAll('.list-container .list-group');
 }
 
@@ -32,6 +34,7 @@ const getNotes = () =>
       'Content-Type': 'application/json',
     },
   });
+console.log(getNotes)
 
 const saveNote = (note) =>
   fetch('/api/notes', {
