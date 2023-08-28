@@ -2,11 +2,14 @@
 
 const express = require('express');
 const path = require('path');
+const uuid = require('./helpers/uuid');
+const { readAndAppend, readFromFile, writeToFile } = require('./helpers/fsUtils');
+
 //const { clog } = require('./middleware/clog');
 // const api = require('./routes/index.js')
 const app = express();
 
-const PORT = process.env.PORT || 3006; //default PORT
+const PORT = 3006; //default PORT
 
 // Import custom middleware, "cLog"
 //app.use(clog);
@@ -26,6 +29,52 @@ app.get('/notes', (req, res) =>
 // Wildcard route to 404.html
 // app.get('*', (req, res) =>
 // res.sendFile(path.join(__dirname, 'public/pages/404.html')));
+
+// GET Route for retrieving all the notes
+app.get('/api/notes', (req, res) => {
+    console.info(`${req.method} request received for notes`);
+readFromFile('./db/notes.json').then((data) => res.json(JSON.parse(data)));
+});
+
+//POST route for new notes
+app.post('/api/notes', (req, res) => {
+    console.info(`${req.method} request received for notes`);
+   const { title, text } = req.body 
+if (title && text) {
+    const newNote = {
+        title,
+        text, 
+        note_id: uuid(),
+    };
+readAndAppend(newNote, './db/notes.json');
+    res.json(response);
+    } else {
+    res.json('Error in parsing note');
+    }
+});
+
+app.get('/api/notes/:id', (req, res) => {
+    const noteId = req.params.note_id;
+    readFromFile('./db/notes.json')
+    .then((data) => JSON.parse(data))
+    .then((json) => {
+        const result = json.filter((note) => note.note_id === noteId);
+        return result.length > 0
+        ? res.json(result)
+        : res.json('No note with that ID');
+    });
+});
+
+app.delete('/api/notes/:id', (req, res) => {
+    const noteId = req.params.note_id;
+    readFromFile('./db/notes.json')
+    .then((data) => JSON.parse(data))
+    .then((json) => {
+        const result = json.filter((notes) => notes.note_id !== noteId);
+        writeToFile('./db/notes.json', result);
+        res.json(`Item ${noteId} has been deleted`);
+    });
+});
 
 // listen() method is responsible for listening for incoming connections on the specified port 
 app.listen(PORT, () => {console.log(`App listening at http://localhost:${PORT}`)}); 
