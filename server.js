@@ -2,23 +2,27 @@
 
 const express = require('express');
 const path = require('path');
-const api = require('./routes/index')
+//const { clog } = require('./middleware/clog');
+// const api = require('./routes/index.js')
 const app = express();
 
 const PORT = process.env.PORT || 3006; //default PORT
 
+// Import custom middleware, "cLog"
+//app.use(clog);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/api', api)
+// app.use('/api', api)
 
 app.use(express.static('public'));//always include as a common standard - to access public repository/folder
 
 // to homepage
 app.get('/', (req, res) => 
-    res.sendFile(path.join(__dirname, 'public/index.html')));
+    res.sendFile(path.join(__dirname, '/public/index.html')));
 // to notes page
 app.get('/notes', (req, res) => 
-    res.sendFile(path.join(__dirname, 'public/pages/notes.html')));
+    res.sendFile(path.join(__dirname, '/public/pages/notes.html')));
 // Wildcard route to 404.html
 // app.get('*', (req, res) =>
 // res.sendFile(path.join(__dirname, 'public/pages/404.html')));
