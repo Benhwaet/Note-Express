@@ -1,4 +1,4 @@
-//Setup reference taken from from Activity 1, Module 11.
+//Setup template from activity 24 and 28 of module 11, express.js, was followed (see Credits)
 
 const express = require('express');
 const path = require('path');
@@ -9,20 +9,21 @@ const { readAndAppend, readFromFile, writeToFile } = require('./helpers/fsUtils'
 
 const app = express();
 
-const PORT = 3001; //default PORT
+const port = process.env.PORT || 3001; //default PORT
 
 // Import custom middleware, "cLog"
 //app.use(clog);
 
+// standard middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));//always include as a common standard - to access public repository/folder
 
-// to homepage
+// path directed to homepage
 app.get('/', (req, res) => 
     res.sendFile(path.join(__dirname, '/public/index.html')));
-// to notes page
+// path directed to notes page
 app.get('/notes', (req, res) => 
     res.sendFile(path.join(__dirname, '/public/pages/notes.html')));
 
@@ -30,13 +31,13 @@ app.get('/notes', (req, res) =>
 // app.get('*', (req, res) =>
 // res.sendFile(path.join(__dirname, 'public/pages/404.html')));
 
-// GET Route for retrieving all the notes
+// GET Route for retrieving all the notes from the database
 app.get('/api/notes', (req, res) => {
     console.info(`${req.method} request received for notes`);
 readFromFile('./db/notes.json').then((data) => res.json(JSON.parse(data)));
 });
 
-//POST route for new notes
+//POST route for new notes, saved(appended) to database
 app.post('/api/notes', (req, res) => {
     console.info(`${req.method} request received for notes`);
    const { title, text } = req.body 
@@ -47,12 +48,13 @@ if (title && text) {
         id: uuid(),
     };
 readAndAppend(newNote, './db/notes.json');
-    res.json(response);
+    res.json("Note appended.");
     } else {
     res.json('Error in parsing note');
     }
 });
 
+// GET and DELETE targetted towards a specific ID enabling single note delete
 app.get('/api/notes/:id', (req, res) => {
     const noteId = req.params.id;
     readFromFile('./db/notes.json')
@@ -77,5 +79,5 @@ app.delete('/api/notes/:id', (req, res) => {
 });
 
 // listen() method is responsible for listening for incoming connections on the specified port 
-app.listen(PORT, () => {console.log(`App listening at http://localhost:${PORT}`)}); 
+app.listen(port, () => {console.log(`App listening at http://localhost:${port}`)}); 
 

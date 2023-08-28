@@ -7,6 +7,19 @@ body {
   padding: 0;
 }
 
+.navbar {
+  background-color: #2E3A72;
+  color:#ffcc40;
+  box-sizing: content-box;
+}
+
+img {
+  display: flex;
+  border-radius: 20px;
+  max-width: 100%;
+  height: auto;
+  
+}
 .save-note {
   display: none;
 }
