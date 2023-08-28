@@ -2,7 +2,9 @@
 
 ## Description
 
- This project required building the back end of an Express.js application to write and save notes. These notes are to be retrieved and saved to a database JSON file. The front end was provided by edX in the scope of a bootcamp project for Fullstack Web Development. Below is the USer Data and Acceptance Criteria provided by the bootcamp instruction team:
+ This project required building the back end of an Express.js application to write and save notes. These notes are to be retrieved and saved to a database JSON file. The front end was provided by edX in the scope of a bootcamp project for Fullstack Web Development.
+
+ Below is the USer Data and Acceptance Criteria provided by the bootcamp instruction team:
 
 ### User Story
 
@@ -41,17 +43,25 @@ THEN I am presented with empty fields to enter a new note title and the note’s
 ## Installation
 
 In order to install the project, the user must copy the files in the repository <github.com/benhwaet/note-express> and install the required dependencies by typing ```npm install``` in the command line.
+
 After having done so, the user must be located in the main project folder to start the server by typing in ```node server.js```, after which the port will be active and the project can be manipulated live.
 
 ## Usage
 
 To use the project, the user must navigate to the Heroku web application at <https://quick-notes-express-55544c7b6a88.herokuapp.com/>.
+
 From the home page, one must click on the 'Get Started' button. Once the notes page is open, the user can type in a title and some content for their note, which will then be available to save and appear in the left hand side in list format to be reviewed or consulted at any time, since it has been saved to the database and will be persistent.
+
 It is also possible to delete the notes by clicking on the trash icon in the notes list.
+
+![Alt text](public/images/Take1.png)
+![Alt text](public/images/Take2.png)
+![Alt text](public/images/Take3.png)
 
 ## Credits
 
 The starter code was provided by edX during a Fullstack Bootcamp hosted by the University of New Brunswick. This code includes all front-end files.
+
 Some alterations were made to the provided files in order to link the back-end and front-end correctly. The main point of reference for this application were the last activities in Module 11 of the bootcamp, Express.js, specifically activities 21, 24, and 28.
 
 ## Contribute
